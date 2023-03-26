@@ -2,7 +2,23 @@
 
 Starter project for Angular and Docker powered by Cirrus UI.
 
-### Default Setup
+### Angular Setup
+
+```
+ng new ng-docker-mark-1
+
+npm i cirrus-ui
+```
+
+### Angular Build and Run
+
+```
+ng serve -o
+
+npm run build:prod
+```
+
+### Docker Setup
 
 Dockerfile
 ```
@@ -43,4 +59,33 @@ server {
         root   /usr/share/nginx/html;
     }
 }
+```
+
+### Docker Build and Run
+
+
+Build image and run container:
+```
+# build image
+docker build -t ng-docker:mark-1 .
+
+# run container
+docker run -p 3300:80 --name ng-docker-container-1 ng-docker:mark-1
+```
+
+Open `http://localhost:3300/` to run the application.
+
+Stop or Remove container:
+```
+# stop container
+docker stop ng-docker-container-1
+
+# remove container
+docker rm ng-docker-container-1
+```
+
+List images:
+```
+# list images
+docker image ls
 ```
