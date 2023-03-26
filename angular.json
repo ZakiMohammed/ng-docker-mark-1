@@ -30,6 +30,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/cirrus-ui/dist/cirrus-all.min.css",
               "src/styles.scss"
             ],
             "scripts": []

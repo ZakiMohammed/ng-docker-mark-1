@@ -1,27 +1,46 @@
-# NgDockerMark1
+# NgDocker - Mark 1
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
+Starter project for Angular and Docker powered by Cirrus UI.
 
-## Development server
+### Default Setup
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Dockerfile
+```
+FROM node:latest as build-env
+WORKDIR /app
 
-## Code scaffolding
+ADD package.json .
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+RUN npm install
 
-## Build
+ADD . .
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+RUN npm run build:prod
 
-## Running unit tests
+FROM nginx:alpine
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+COPY --from=build-env /app/dist/ng-docker-mark-1 /usr/share/nginx/html
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
-## Running end-to-end tests
+EXPOSE 8080
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Nginx Conf:
+```
+server {
+    listen 80;
 
-## Further help
+    root /usr/share/nginx/html;
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+    location / {
+        index  index.html index.htm;
+        try_files $uri $uri/ /index.html;
+    }
+    
+    error_page   500 502 503 504  /50x.html;
+    
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}
+```
