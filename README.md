@@ -1,5 +1,10 @@
 # NgDocker - Mark 1
 
+Check out the CodeOmelet blog post for this project.
+
+Link: https://codeomelet.com/posts/dockerized-angular-app-with-nginx-ngdocker
+___
+
 Starter project for Angular and Docker powered by Cirrus UI.
 
 ### Angular Setup
